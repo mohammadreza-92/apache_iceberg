@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  spark:
+    image: tabulario/spark-iceberg
+    container_name: spark
+    build: spark/
+    networks:
+      iceberg_net:
+    depends_on:
+      - rest
+    volumes:
+      - ./warehouse:/home/iceberg/warehouse
+      - ./notebooks:/home/iceberg/notebooks/notebooks
+    environment:
+      - CATALOG_WAREHOUSE=/home/iceberg/warehouse
+      - CATALOG_IO__IMPL=org.apache.iceberg.hadoop.HadoopFileIO
+    ports:
+      - 8888:8888  # Jupyter Notebook
+      - 8080:8080  # Spark UI
+      - 10000:10000 # Spark Thrift Server
+      - 10001:10001 # Spark History Server
+
+  rest:
+    image: apache/iceberg-rest-fixture
+    container_name: iceberg-rest
+    networks:
+      iceberg_net:
+    ports:
+      - 8181:8181
+    environment:
+      - CATALOG_WAREHOUSE=/home/iceberg/warehouse
+      - CATALOG_IO__IMPL=org.apache.iceberg.hadoop.HadoopFileIO
+
+networks:
+  iceberg_net:
