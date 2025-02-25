@@ -28,7 +28,8 @@ Ensure you have the following installed:
 
 ### Installation
 1. [Docker File](https://github.com/mohammadreza-92/apache_iceberg/blob/main/docker-compose.yml)
-2. ...
+2. [Local Iceberg](https://github.com/mohammadreza-92/apache_iceberg/blob/main/docker-compose-local.yml)
+3. ...
 
 ## 📖 Documentation
 ...
